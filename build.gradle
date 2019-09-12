@@ -1,0 +1,150 @@
+plugins {
+    id 'java-library'
+    id 'maven'
+    id 'maven-publish'
+    id 'signing'
+}
+
+group = 'fr.cleymax'
+version = '1.0.0'
+
+sourceCompatibility = '1.8'
+targetCompatibility = '1.8'
+
+compileJava.options.encoding = 'UTF-8'
+javadoc.options.encoding = 'UTF-8'
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+    maven { url = 'https://hub.spigotmc.org/nexus/content/groups/public/' }
+    maven { url = 'https://oss.sonatype.org/content/groups/public/' }
+    maven { url = 'http://repo.dmulloy2.net/nexus/repository/public/' }
+}
+
+dependencies {
+    compileOnly group: 'org.spigotmc', name: 'spigot', version: '1.14.4-R0.1-SNAPSHOT'
+}
+
+jar {
+    archiveFileName = 'SignGUI-' + project.version + '.jar'
+}
+
+tasks.withType(JavaCompile) {
+    options.encoding = 'UTF-8'
+}
+
+javadoc {
+    doFirst {
+        options.links(
+                'https://hub.spigotmc.org/javadocs/spigot/',
+                'https://docs.oracle.com/javase/8/docs/api/'
+        )
+        options.setWindowTitle('SignGUI')
+        options.setEncoding("UTF-8")
+        options.setDocTitle('SignGUI')
+        options.setUse(true)
+        options.setVersion(true)
+        options.setAuthor(true)
+    }
+    destinationDir = file("./docs/")
+}
+
+task javadocJar(type: Jar) {
+    archiveClassifier = 'javadoc'
+    from javadoc
+}
+
+task sourcesJar(type: Jar) {
+    archiveClassifier = 'sources'
+    from sourceSets.main.allSource
+}
+
+artifacts { archives javadocJar, sourcesJar }
+
+
+signing {
+    sign configurations.archives
+}
+
+publishToMavenLocal {
+    publishing {
+        publications {
+            maven(MavenPublication) {
+                groupId = 'fr.cleymax'
+                artifactId = 'signgui'
+                version = '1.0.0'
+
+                from components.java
+
+                artifact sourcesJar
+                artifact javadocJar
+
+                pom {
+                    name = 'SignGUI'
+                    packaging 'jar'
+                    description = 'Sign API for your Minecraft Bukkit plugins.'
+                    url = 'https://github.com/Cleymax/SignGUI'
+
+                    licenses {
+                        license {
+                            name = 'GNU General Public License v3.0'
+                            url = 'https://www.gnu.org/licenses/gpl-3.0.en.html'
+                        }
+                    }
+
+                    developers {
+                        developer {
+                            id = 'cleymax'
+                            name = 'Clément P. (Cleymax)'
+                            email = 'cleymaxpro@gmail.com'
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+uploadArchives {
+    repositories {
+        mavenDeployer {
+            beforeDeployment {
+                MavenDeployment deployment -> signing.signPom(deployment)
+            }
+            if (project.hasProperty("mavenUser") && project.hasProperty("mavenPassword")) {
+                repository(url: repositoryUrl) {
+                    authentication(userName: mavenUser, password: mavenPassword)
+                }
+            }
+
+            pom.project {
+                name 'signgui'
+                packaging 'jar'
+                description 'Sign API for your Minecraft Bukkit plugins.'
+                url 'https://github.com/Cleymax/SignGUI'
+
+                scm {
+                    connection 'scm:git:git://github.com/Cleymax/SignGUI.git'
+                    developerConnection 'scm:git:ssh://github.com:Cleymax/SignGUI.git'
+                    url 'http://github.com/Cleymax/SignGUI/tree/master'
+                }
+
+                licenses {
+                    license {
+                        name 'GNU General Public License v3.0'
+                        url 'https://www.gnu.org/licenses/gpl-3.0.en.html'
+                    }
+                }
+
+                developers {
+                    developer {
+                        id 'cleymax'
+                        name 'Clément P. (Cleymax)'
+                        email 'cleymaxpro@gmail.com'
+                    }
+                }
+            }
+        }
+    }
+}
