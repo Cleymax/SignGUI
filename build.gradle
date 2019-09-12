@@ -111,9 +111,7 @@ uploadArchives {
     repositories {
         mavenDeployer {
             beforeDeployment {
-                if (project.hasProperty("signing.keyId")) {
-                    MavenDeployment deployment -> signing.signPom(deployment)
-                }
+                MavenDeployment deployment -> signing.signPom(deployment)
             }
             if (project.hasProperty("mavenUser") && project.hasProperty("mavenPassword")) {
                 repository(url: repositoryUrl) {
