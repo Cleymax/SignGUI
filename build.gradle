@@ -48,6 +48,10 @@ javadoc {
         options.setAuthor(true)
     }
     destinationDir = file("./docs/")
+
+    if(JavaVersion.current() >= JavaVersion.VERSION_1_9){
+        options.addBooleanOption('html5', true)
+    }
 }
 
 task javadocJar(type: Jar) {
