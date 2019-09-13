@@ -70,6 +70,7 @@ public final class SignManager {
 							String[]      lines         = SignReflection.getValue(inUpdateSign, "b");
 
 							signGUI.getCompleteHandler().onAnvilClick(new SignCompleteEvent(player, blockPosition, lines));
+							guiMap.remove(player.getUniqueId());
 						}
 					}
 					super.channelRead(ctx, packet);
@@ -84,10 +85,16 @@ public final class SignManager {
 		{
 			final Channel channel = ((CraftPlayer) event.getPlayer()).getHandle().playerConnection.networkManager.channel;
 			channel.eventLoop().submit(() -> channel.pipeline().remove(event.getPlayer().getName()));
+			guiMap.remove(event.getPlayer().getUniqueId());
 		}
 	}
 
-	public void addGui(UUID uuid, SignGUI signGUI)
+	/**
+	 * Add New gui
+	 * @param uuid - UUID of the player
+	 * @param signGUI - {@link SignGUI} instance
+	 */
+	void addGui(UUID uuid, SignGUI signGUI)
 	{
 		this.guiMap.put(uuid, signGUI);
 	}

@@ -27,10 +27,6 @@ dependencies {
     compileOnly group: 'org.spigotmc', name: 'spigot', version: '1.14.4-R0.1-SNAPSHOT'
 }
 
-jar {
-    archiveFileName = 'SignGUI-' + project.version + '.jar'
-}
-
 processResources {
     from(sourceSets.main.resources.srcDirs) {
         expand 'version': project.version
@@ -56,7 +52,7 @@ javadoc {
     }
     destinationDir = file("./docs/")
 
-    if(JavaVersion.current() >= JavaVersion.VERSION_1_9){
+    if (JavaVersion.current() >= JavaVersion.VERSION_1_9) {
         options.addBooleanOption('html5', true)
     }
 }
@@ -73,9 +69,20 @@ task sourcesJar(type: Jar) {
 
 artifacts { archives javadocJar, sourcesJar }
 
-if (project.hasProperty("signing.keyId")) {
+if (project.hasProperty("signing.keyId") && project.hasProperty("release")) {
     signing {
         sign configurations.archives
+    }
+}
+
+gradle.taskGraph.whenReady { taskGraph ->
+    def console = System.console()
+    if (project.hasProperty("release")) {
+        project.version = project.version + '-RELEASE'
+        console.printf "> Build new release v" + project.version + " !"
+    } else {
+        project.version = project.version + '-SNAPSHOT'
+        console.printf "> Build new snapshot v" + project.version + " !"
     }
 }
 

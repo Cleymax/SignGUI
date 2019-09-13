@@ -23,7 +23,7 @@ public class SignReflection {
 	 * @return the label of the field
 	 * @throws ReflectionException if any non-runtime exception is thrown
 	 */
-	public static <T> T getValue(@Nonnull Object instance, @Nonnull String field)
+	static <T> T getValue(@Nonnull Object instance, @Nonnull String field)
 	{
 		return fieldGet(findField(instance.getClass(), field), instance);
 	}
@@ -90,21 +90,12 @@ public class SignReflection {
 	 */
 	public static final class ReflectionException extends RuntimeException {
 
-		private ReflectionException()
-		{
-		}
-
 		private ReflectionException(String arg0)
 		{
 			super(arg0);
 		}
 
-		private ReflectionException(String arg0, Throwable arg1)
-		{
-			super(arg0, arg1);
-		}
-
-		public ReflectionException(Throwable arg0)
+		ReflectionException(Throwable arg0)
 		{
 			super(arg0);
 		}

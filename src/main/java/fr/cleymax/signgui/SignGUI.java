@@ -1,5 +1,6 @@
 package fr.cleymax.signgui;
 
+import com.google.common.base.Preconditions;
 import net.minecraft.server.v1_14_R1.*;
 import org.bukkit.Material;
 import org.bukkit.craftbukkit.v1_14_R1.CraftWorld;
@@ -7,6 +8,8 @@ import org.bukkit.craftbukkit.v1_14_R1.block.CraftSign;
 import org.bukkit.craftbukkit.v1_14_R1.entity.CraftPlayer;
 import org.bukkit.craftbukkit.v1_14_R1.util.CraftMagicNumbers;
 import org.bukkit.entity.Player;
+
+import java.beans.ConstructorProperties;
 
 /**
  * File <b>SignGUI</b> located on fr.cleymax.signgui SignGUI is a part of SignGUI.
@@ -24,11 +27,13 @@ public final class SignGUI {
 	private       Player                   player;
 	private       String[]                 lines;
 
+	@ConstructorProperties({"signManager", "completeHandler"})
 	public SignGUI(SignManager signManager, SignClickCompleteHandler completeHandler)
 	{
 		this.signManager = signManager;
 		this.completeHandler = completeHandler;
 		this.lines = new String[4];
+		this.player = null;
 	}
 
 	public SignGUI withLines(String... lines)
@@ -46,7 +51,7 @@ public final class SignGUI {
 	{
 		this.player = player;
 
-		BlockPosition blockPosition = new BlockPosition(player.getLocation().getBlockX(), 1, player.getLocation().getBlockZ());
+		final BlockPosition blockPosition = new BlockPosition(player.getLocation().getBlockX(), 1, player.getLocation().getBlockZ());
 
 		PacketPlayOutBlockChange packet = new PacketPlayOutBlockChange(((CraftWorld) player.getWorld()).getHandle(), blockPosition);
 		packet.block = CraftMagicNumbers.getBlock(Material.OAK_SIGN, (byte) 0);
@@ -66,11 +71,12 @@ public final class SignGUI {
 
 	private void sendPacket(Packet<?> packet)
 	{
-		((CraftPlayer) player).getHandle().playerConnection.sendPacket(packet);
+		Preconditions.checkNotNull(this.player);
+		((CraftPlayer) this.player).getHandle().playerConnection.sendPacket(packet);
 	}
 
 	SignClickCompleteHandler getCompleteHandler()
 	{
-		return completeHandler;
+		return this.completeHandler;
 	}
 }
