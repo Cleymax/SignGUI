@@ -135,6 +135,11 @@ uploadArchives {
                     url 'http://github.com/Cleymax/SignGUI/tree/master'
                 }
 
+                issueManagement {
+                    system 'GitHub'
+                    url 'https://github.com/Cleymax/SignGUI/issues'
+                }
+
                 licenses {
                     license {
                         name 'GNU General Public License v3.0'
