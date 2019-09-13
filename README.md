@@ -1,6 +1,6 @@
 <p align="center">
     <a href="https://github.com/Cleymax/SignGUI" rel="noopener">
-        <img width=200px height=200px src="https://i.imgur.com/05lY09v.png" alt="Project logo">
+        <img width=350px height=175px src="https://i.imgur.com/05lY09v.png" alt="Project logo">
     </a>
 </p>
 
