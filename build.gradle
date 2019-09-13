@@ -3,6 +3,7 @@ plugins {
     id 'maven'
     id 'maven-publish'
     id 'signing'
+    id 'eclipse'
 }
 
 group = 'fr.cleymax'
