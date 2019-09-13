@@ -31,6 +31,12 @@ jar {
     archiveFileName = 'SignGUI-' + project.version + '.jar'
 }
 
+processResources {
+    from(sourceSets.main.resources.srcDirs) {
+        expand 'version': project.version
+    }
+}
+
 tasks.withType(JavaCompile) {
     options.encoding = 'UTF-8'
 }
