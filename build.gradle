@@ -1,4 +1,4 @@
-plugins {
+    plugins {
     id 'java-library'
     id 'maven'
     id 'maven-publish'
@@ -21,10 +21,12 @@ repositories {
     maven { url = 'https://hub.spigotmc.org/nexus/content/groups/public/' }
     maven { url = 'https://oss.sonatype.org/content/groups/public/' }
     maven { url = 'http://repo.dmulloy2.net/nexus/repository/public/' }
+    mavenLocal() // Required for NMS
 }
 
 dependencies {
-    compileOnly group: 'org.spigotmc', name: 'spigot', version: '1.14.4-R0.1-SNAPSHOT'
+    implementation 'org.spigotmc:spigot-api:1.16.5-R0.1-SNAPSHOT'
+    implementation 'org.spigotmc:spigot:1.16.4-R0.1-SNAPSHOT' // Full Spigot, allows us to use NMS
 }
 
 processResources {
