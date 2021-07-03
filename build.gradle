@@ -1,16 +1,15 @@
-    plugins {
+plugins {
     id 'java-library'
-    id 'maven'
     id 'maven-publish'
     id 'signing'
     id 'eclipse'
 }
 
 group = 'fr.cleymax'
-version = '1.0.0'
+version = '1.1.0'
 
-sourceCompatibility = '1.8'
-targetCompatibility = '1.8'
+sourceCompatibility = '16'
+targetCompatibility = '16'
 
 compileJava.options.encoding = 'UTF-8'
 javadoc.options.encoding = 'UTF-8'
@@ -20,13 +19,13 @@ repositories {
     mavenCentral()
     maven { url = 'https://hub.spigotmc.org/nexus/content/groups/public/' }
     maven { url = 'https://oss.sonatype.org/content/groups/public/' }
-    maven { url = 'http://repo.dmulloy2.net/nexus/repository/public/' }
+    maven { url = 'https://repo.dmulloy2.net/nexus/repository/public/' }
     mavenLocal() // Required for NMS
 }
 
 dependencies {
-    implementation 'org.spigotmc:spigot-api:1.16.5-R0.1-SNAPSHOT'
-    implementation 'org.spigotmc:spigot:1.16.4-R0.1-SNAPSHOT' // Full Spigot, allows us to use NMS
+    implementation 'org.spigotmc:spigot-api:1.17-R0.1-SNAPSHOT'
+    implementation 'org.spigotmc:spigot:1.17-R0.1-SNAPSHOT' // Full Spigot, allows us to use NMS
 }
 
 processResources {
@@ -37,6 +36,10 @@ processResources {
 
 tasks.withType(JavaCompile) {
     options.encoding = 'UTF-8'
+}
+
+tasks.withType(Copy) {
+    duplicatesStrategy = 'include'
 }
 
 javadoc {
@@ -54,7 +57,7 @@ javadoc {
     }
     destinationDir = file("./docs/")
 
-    if (JavaVersion.current() >= JavaVersion.VERSION_1_9) {
+    if (JavaVersion.current().isJava9Compatible()) {
         options.addBooleanOption('html5', true)
     }
 }
@@ -91,10 +94,10 @@ gradle.taskGraph.whenReady { taskGraph ->
 publishToMavenLocal {
     publishing {
         publications {
-            maven(MavenPublication) {
+            mavenJava(MavenPublication) {
                 groupId = 'fr.cleymax'
                 artifactId = 'signgui'
-                version = '1.0.0'
+                version = '1.1.0'
 
                 from components.java
 
@@ -126,51 +129,55 @@ publishToMavenLocal {
         }
     }
 }
-
-uploadArchives {
-    repositories {
-        mavenDeployer {
-            beforeDeployment {
-                MavenDeployment deployment -> signing.signPom(deployment)
-            }
-            if (project.hasProperty("mavenUser") && project.hasProperty("mavenPassword")) {
-                repository(url: repositoryUrl) {
-                    authentication(userName: mavenUser, password: mavenPassword)
-                }
-            }
-
-            pom.project {
-                name 'signgui'
-                packaging 'jar'
-                description 'Sign API for your Minecraft Bukkit plugins.'
-                url 'https://github.com/Cleymax/SignGUI'
-
-                scm {
-                    connection 'scm:git:git://github.com/Cleymax/SignGUI.git'
-                    developerConnection 'scm:git:ssh://github.com:Cleymax/SignGUI.git'
-                    url 'http://github.com/Cleymax/SignGUI/tree/master'
-                }
-
-                issueManagement {
-                    system 'GitHub'
-                    url 'https://github.com/Cleymax/SignGUI/issues'
-                }
-
-                licenses {
-                    license {
-                        name 'GNU General Public License v3.0'
-                        url 'https://www.gnu.org/licenses/gpl-3.0.en.html'
-                    }
-                }
-
-                developers {
-                    developer {
-                        id 'cleymax'
-                        name 'Clément P. (Cleymax)'
-                        email 'cleymaxpro@gmail.com'
-                    }
-                }
-            }
-        }
-    }
-}
+//
+//publishing {
+//    publications {
+//        mavenJava(MavenPublication) {
+//            beforeDeployment {
+//                deployment -> signing.signPom(deployment)
+//            }
+//
+//            pom.project {
+//                name 'signgui'
+//                packaging 'jar'
+//                description 'Sign API for your Minecraft Bukkit plugins.'
+//                url 'https://github.com/Cleymax/SignGUI'
+//
+//                scm {
+//                    connection 'scm:git:git://github.com/Cleymax/SignGUI.git'
+//                    developerConnection 'scm:git:ssh://github.com:Cleymax/SignGUI.git'
+//                    url 'http://github.com/Cleymax/SignGUI/tree/master'
+//                }
+//
+//                issueManagement {
+//                    system 'GitHub'
+//                    url 'https://github.com/Cleymax/SignGUI/issues'
+//                }
+//
+//                licenses {
+//                    license {
+//                        name 'GNU General Public License v3.0'
+//                        url 'https://www.gnu.org/licenses/gpl-3.0.en.html'
+//                    }
+//                }
+//
+//                developers {
+//                    developer {
+//                        id 'cleymax'
+//                        name 'Clément P. (Cleymax)'
+//                        email 'cleymaxpro@gmail.com'
+//                    }
+//                }
+//            }
+//        }
+//    }
+//    repositories {
+//        maven {
+//            credentials {
+//                username mavenUser
+//                password mavenPassword
+//            }
+//            url repositoryUrl
+//        }
+//    }
+//}

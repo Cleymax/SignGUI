@@ -1,6 +1,6 @@
 package fr.cleymax.signgui;
 
-import net.minecraft.server.v1_16_R3.BlockPosition;
+import net.minecraft.core.BlockPosition;
 import org.bukkit.entity.Player;
 
 import java.beans.ConstructorProperties;

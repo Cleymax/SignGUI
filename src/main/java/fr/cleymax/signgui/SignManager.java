@@ -1,14 +1,12 @@
 package fr.cleymax.signgui;
 
-import io.netty.channel.Channel;
 import io.netty.channel.ChannelDuplexHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelPipeline;
-import net.minecraft.server.v1_16_R3.BlockPosition;
-import net.minecraft.server.v1_16_R3.PacketPlayInUpdateSign;
+import net.minecraft.core.BlockPosition;
+import net.minecraft.network.protocol.game.PacketPlayInUpdateSign;
 import org.bukkit.Bukkit;
-import org.bukkit.craftbukkit.v1_16_R3.entity.CraftPlayer;
-import org.bukkit.entity.Player;
+import org.bukkit.craftbukkit.v1_17_R1.entity.CraftPlayer;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.player.PlayerJoinEvent;
@@ -54,20 +52,20 @@ public final class SignManager {
 		@EventHandler()
 		public void onPlayerJoin(PlayerJoinEvent event)
 		{
-			final Player player = event.getPlayer();
+			final var player = event.getPlayer();
 			ChannelDuplexHandler channelDuplexHandler = new ChannelDuplexHandler() {
 				@Override
 				public void channelRead(ChannelHandlerContext ctx, Object packet) throws Exception
 				{
 					if (packet instanceof PacketPlayInUpdateSign)
 					{
-						PacketPlayInUpdateSign inUpdateSign = (PacketPlayInUpdateSign) packet;
+						var inUpdateSign = (PacketPlayInUpdateSign) packet;
 						if (guiMap.containsKey(player.getUniqueId()))
 						{
-							SignGUI signGUI = guiMap.get(player.getUniqueId());
+							var signGUI = guiMap.get(player.getUniqueId());
 
-							BlockPosition blockPosition = SignReflection.getValue(inUpdateSign, "a");
-							String[]      lines         = SignReflection.getValue(inUpdateSign, "b");
+							BlockPosition blockPosition = SignReflection.getValue(inUpdateSign, "b");
+							String[]      lines         = SignReflection.getValue(inUpdateSign, "c");
 
 							signGUI.getCompleteHandler().onAnvilClick(new SignCompleteEvent(player, blockPosition, lines));
 							guiMap.remove(player.getUniqueId());
@@ -76,14 +74,14 @@ public final class SignManager {
 					super.channelRead(ctx, packet);
 				}
 			};
-			final ChannelPipeline pipeline = ((CraftPlayer) player).getHandle().playerConnection.networkManager.channel.pipeline();
+			final ChannelPipeline pipeline = ((CraftPlayer) player).getHandle().b.a.k.pipeline();
 			pipeline.addBefore("packet_handler", player.getName(), channelDuplexHandler);
 		}
 
 		@EventHandler()
 		public void onPlayerQuit(PlayerQuitEvent event)
 		{
-			final Channel channel = ((CraftPlayer) event.getPlayer()).getHandle().playerConnection.networkManager.channel;
+			final var channel = ((CraftPlayer) event.getPlayer()).getHandle().b.a.k;
 			channel.eventLoop().submit(() -> channel.pipeline().remove(event.getPlayer().getName()));
 			guiMap.remove(event.getPlayer().getUniqueId());
 		}
