@@ -28,14 +28,14 @@ import java.beans.ConstructorProperties;
 
 public final class SignGUI {
 
-    private final SignManager signManager;
+    private final SignGUIPlugin plugin;
     private final SignClickCompleteHandler completeHandler;
     private Player player;
     private String[] lines;
 
-    @ConstructorProperties({"signManager", "completeHandler"})
-    public SignGUI(SignManager signManager, SignClickCompleteHandler completeHandler) {
-        this.signManager = signManager;
+    @ConstructorProperties({"plugin", "completeHandler"})
+    SignGUI(SignGUIPlugin plugin, SignClickCompleteHandler completeHandler) {
+        this.plugin = plugin;
         this.completeHandler = completeHandler;
         this.lines = new String[4];
         this.player = null;
@@ -50,7 +50,7 @@ public final class SignGUI {
         return this;
     }
 
-    public void open(Player player) {
+    public BlockPosition open(Player player) {
         this.player = player;
 
         final var blockPosition = new BlockPosition(player.getLocation().getBlockX(), 1, player.getLocation().getBlockZ());
@@ -69,7 +69,9 @@ public final class SignGUI {
 
         var outOpenSignEditor = new PacketPlayOutOpenSignEditor(blockPosition);
         sendPacket(outOpenSignEditor);
-        this.signManager.addGui(player.getUniqueId(), this);
+        plugin.addGui(player.getUniqueId(), this);
+
+        return blockPosition;
     }
 
     private void sendPacket(Packet<?> packet) {

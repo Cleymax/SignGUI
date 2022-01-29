@@ -11,5 +11,5 @@ package fr.cleymax.signgui;
 
 public interface SignClickCompleteHandler {
 
-	void onAnvilClick(SignCompleteEvent event);
+    void onAnvilClick(SignCompleteEvent event);
 }

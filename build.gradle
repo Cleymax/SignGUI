@@ -6,7 +6,7 @@ plugins {
 }
 
 group = 'fr.cleymax'
-version = '1.2.0'
+version = '2.0.0'
 
 sourceCompatibility = '16'
 targetCompatibility = '16'
@@ -97,7 +97,7 @@ publishToMavenLocal {
             mavenJava(MavenPublication) {
                 groupId = 'fr.cleymax'
                 artifactId = 'signgui'
-                version = '1.2.0'
+                version = '2.0.0'
 
                 from components.java
 
