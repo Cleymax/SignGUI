@@ -6,7 +6,7 @@ plugins {
 }
 
 group = 'fr.cleymax'
-version = '1.1.0'
+version = '2.0.0'
 
 sourceCompatibility = '16'
 targetCompatibility = '16'
@@ -24,8 +24,8 @@ repositories {
 }
 
 dependencies {
-    implementation 'org.spigotmc:spigot-api:1.17-R0.1-SNAPSHOT'
-    implementation 'org.spigotmc:spigot:1.17-R0.1-SNAPSHOT' // Full Spigot, allows us to use NMS
+    implementation 'org.spigotmc:spigot-api:1.18-R0.1-SNAPSHOT'
+    implementation 'org.spigotmc:spigot:1.18-R0.1-SNAPSHOT' // Full Spigot, allows us to use NMS
 }
 
 processResources {
@@ -97,7 +97,7 @@ publishToMavenLocal {
             mavenJava(MavenPublication) {
                 groupId = 'fr.cleymax'
                 artifactId = 'signgui'
-                version = '1.1.0'
+                version = '2.0.0'
 
                 from components.java
 
