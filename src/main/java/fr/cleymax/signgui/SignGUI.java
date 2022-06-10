@@ -10,9 +10,9 @@ import net.minecraft.world.item.EnumColor;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.TileEntitySign;
 import org.bukkit.Material;
-import org.bukkit.craftbukkit.v1_17_R1.block.CraftSign;
-import org.bukkit.craftbukkit.v1_17_R1.entity.CraftPlayer;
-import org.bukkit.craftbukkit.v1_17_R1.util.CraftMagicNumbers;
+import org.bukkit.craftbukkit.v1_18_R2.block.CraftSign;
+import org.bukkit.craftbukkit.v1_18_R2.entity.CraftPlayer;
+import org.bukkit.craftbukkit.v1_18_R2.util.CraftMagicNumbers;
 import org.bukkit.entity.Player;
 
 import java.beans.ConstructorProperties;
