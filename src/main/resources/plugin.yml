@@ -1,7 +1,7 @@
 name: SignGUI
 version: 1.1.0
-api-version: 1.17
+api-version: 1.18
 description: SignGUI API for your Minecraft Bukkit plugins.
-author: Cleymax
+authors: [Cleymax, TheMiniLuca]
 website: https://github.com/Cleymax/SignGUI
 main: fr.cleymax.signgui.SignGUIPlugin
