@@ -8,8 +8,8 @@ plugins {
 group = 'fr.cleymax'
 version = '1.1.0'
 
-sourceCompatibility = '16'
-targetCompatibility = '16'
+sourceCompatibility = '17'
+targetCompatibility = '17'
 
 compileJava.options.encoding = 'UTF-8'
 javadoc.options.encoding = 'UTF-8'
@@ -24,8 +24,8 @@ repositories {
 }
 
 dependencies {
-    implementation 'org.spigotmc:spigot-api:1.18.2-R0.1-SNAPSHOT'
-    implementation 'org.spigotmc:spigot:1.18.2-R0.1-SNAPSHOT' // Full Spigot, allows us to use NMS
+    implementation 'org.spigotmc:spigot-api:1.19.2-R0.1-SNAPSHOT'
+    implementation 'org.spigotmc:spigot:1.19.2-R0.1-SNAPSHOT' // Full Spigot, allows us to use NMS
 }
 
 processResources {

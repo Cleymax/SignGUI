@@ -10,9 +10,9 @@ import net.minecraft.world.item.EnumColor;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.TileEntitySign;
 import org.bukkit.Material;
-import org.bukkit.craftbukkit.v1_18_R2.block.CraftSign;
-import org.bukkit.craftbukkit.v1_18_R2.entity.CraftPlayer;
-import org.bukkit.craftbukkit.v1_18_R2.util.CraftMagicNumbers;
+import org.bukkit.craftbukkit.v1_19_R1.block.CraftSign;
+import org.bukkit.craftbukkit.v1_19_R1.entity.CraftPlayer;
+import org.bukkit.craftbukkit.v1_19_R1.util.CraftMagicNumbers;
 import org.bukkit.entity.Player;
 
 import java.beans.ConstructorProperties;
@@ -59,7 +59,7 @@ public final class SignGUI {
         sendPacket(packet);
 
         IChatBaseComponent[] components = CraftSign.sanitizeLines(lines);
-        var sign = new TileEntitySign(blockPosition, Blocks.cg.n());
+        var sign = new TileEntitySign(blockPosition, Blocks.cg.m());
         sign.a(EnumColor.p);
 
         for (var i = 0; i < components.length; i++)
