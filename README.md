@@ -12,12 +12,12 @@
   [![GitHub Issues](https://img.shields.io/github/issues/Cleymax/SignGUI.svg?style=flat-square)](https://github.com/Cleymax/SignGUI/issues)
   [![GitHub Pull Requests](https://img.shields.io/github/issues-pr/Cleymax/SignGUI.svg?style=flat-square)](https://github.com/Cleymax/SignGUI/pulls)
   [![GitHub](https://img.shields.io/github/license/Cleymax/SignGUI)](/LICENSE)
+  [!![GitHub Workflow Status (branch)](https://img.shields.io/github/workflow/status/Cleymax/SignGUI/Java%20CI/mc-1.19)](https://github.com/Cleymax/SignGUI/actions)
 
 </div>
 
 <p align="center"> Create a sign with a predefined text with the Spigot api, packet and nms !
     <br> 
-    Only in <strong>1.14.X</strong> for the moment
 </p>
 
 ## 📝 Table of Contents
@@ -39,27 +39,41 @@ To use the SignGUI API, either:
 
 You can download the latest version on the [Releases page](https://github.com/Cleymax/SignGUI/releases) on Github.
 
-You can also use a build system: **SOON**
+### Use
+
+Latest version: [v1.2.1](https://github.com/Cleymax/SignGUI/packages/24279?version=1.2.1).
+
+Please see [Github Documentation](https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-apache-maven-registry) to add Github project repository.
 
 #### Gradle
-```gradle
+
+```groovy
 repositories {
-    mavenCentral()
+  maven {
+    name = "GitHubPackages"
+    url = uri("https://maven.pkg.github.com/Cleymax/SignGUI")
+  }
 }
 
 dependencies {
-    compile 'fr.cleymax:signgui:1.0.0'
+    compile 'fr.cleymax:SignGUI:1.2.1'
 }
 ```
 
 #### Maven
 ```xml
+<repository>
+  <id>github</id>
+  <url>https://maven.pkg.github.com/Cleymax/SignGUI</url>
+</repository>
+
 <dependency>
   <groupId>fr.cleymax</groupId>
-  <artifactId>signgui</artifactId>
-  <version>1.0.0</version>
+  <artifactId>SignGUI</artifactId>
+  <version>1.2.1</version>
 </dependency>
 ```
+
 
 ## ⛏️ Built Using <a name = "built_using"></a>
 - [Gradle](https://gradle.org) - Gradle is a production engine running on the Java platform.
