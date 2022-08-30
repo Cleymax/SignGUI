@@ -2,6 +2,10 @@ name: Java CI
 
 on: [push]
 
+env:
+  MC_VERSION: 1.19.2
+  VERSION: 1.2.1
+
 jobs:
   build:
 
@@ -18,7 +22,7 @@ jobs:
         shell: bash
         run: |
           curl -Lo BuildTools.jar https://hub.spigotmc.org/jenkins/job/BuildTools/lastSuccessfulBuild/artifact/target/BuildTools.jar
-          java -jar BuildTools.jar --rev 1.19.2
+          java -jar BuildTools.jar --rev $MC_VERSION
       - name: Add Permission
         run: chmod +x ./gradlew
       - name: Clean, Build and generate Doc with Gradle
@@ -26,9 +30,9 @@ jobs:
       - name: Tar files
         shell: bash
         run: |
-          tar -cvf SignGUI-${GITHUB_REF##*/}.tar build/libs/*.jar docs/
+          tar -cvf "SignGUI-$VERSION-(MC-$MC_VERSION).tar" build/libs/*.jar docs/
       - name: Download a Build Artifact
         uses: actions/download-artifact@v3.0.0
         with:
           name: Build
-          path: SignGUI-${GITHUB_REF##*/}.tar
+          path: "SignGUI-$VERSION-(MC-$MC_VERSION).tar"
