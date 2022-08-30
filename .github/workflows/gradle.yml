@@ -14,7 +14,8 @@ jobs:
         with:
           java-version: 17
           distribution: 'adopt'
-      - shell: Install Spigot with BuildTools
+      - name: Install Spigot with BuildTools
+        shell: bash
         run: |
           popd /tmp
           curl -Lo BuildTools.jar https://hub.spigotmc.org/jenkins/job/BuildTools/lastSuccessfulBuild/artifact/target/BuildTools.jar
