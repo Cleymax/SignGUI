@@ -135,6 +135,8 @@ publishing {
     publications {
         mavenJava(MavenPublication) {
             pom {
+                groupId = 'fr.cleymax'
+                artifactId = 'signgui'
                 name = 'SignGUI'
                 packaging 'jar'
                 description 'Sign API for your Minecraft Bukkit plugins.'
