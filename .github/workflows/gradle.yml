@@ -31,8 +31,8 @@ jobs:
         shell: bash
         run: |
           tar -cvf "SignGUI-$VERSION-(MC-$MC_VERSION).tar" build/libs/*.jar docs/
-      - name: Download a Build Artifact
-        uses: actions/download-artifact@v3.0.0
+      - name: Upload a Build Artifact
+        uses: actions/upload-artifact@v3
         with:
           name: Build
           path: "SignGUI-$VERSION-(MC-$MC_VERSION).tar"
