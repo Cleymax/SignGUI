@@ -21,5 +21,14 @@ jobs:
           java -jar BuildTools.jar --rev 1.19.2
       - name: Add Permission
         run: chmod +x ./gradlew
-      - name: Build with Gradle
-        run: ./gradlew build
+      - name: Clean, Build and generate Doc with Gradle
+        run: ./gradlew clean build javadoc
+      - name: Tar files
+        shell: bash
+        run: |
+          tar -cvf SignGUI-${GITHUB_REF##*/}.tar build/libs/*.jar docs/
+      - name: Download a Build Artifact
+        uses: actions/download-artifact@v3.0.0
+        with:
+          name: Build
+          path: SignGUI-${GITHUB_REF##*/}.tar
