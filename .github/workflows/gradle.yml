@@ -17,11 +17,8 @@ jobs:
       - name: Install Spigot with BuildTools
         shell: bash
         run: |
-          mkdir ./tmp
-          popd ./tmp
           curl -Lo BuildTools.jar https://hub.spigotmc.org/jenkins/job/BuildTools/lastSuccessfulBuild/artifact/target/BuildTools.jar
           java -jar BuildTools.jar --rev 1.19.2
-          pushd
       - name: Add Permission
         run: chmod +x ./gradlew
       - name: Build with Gradle
