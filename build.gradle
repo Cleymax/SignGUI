@@ -6,7 +6,7 @@ plugins {
 }
 
 group = 'fr.cleymax'
-version = '1.1.0'
+version = '1.2.1'
 
 sourceCompatibility = '17'
 targetCompatibility = '17'
@@ -77,6 +77,7 @@ artifacts { archives javadocJar, sourcesJar }
 if (project.hasProperty("signing.keyId") && project.hasProperty("release")) {
     signing {
         sign configurations.archives
+        sign publishing.publications.mavenJava
     }
 }
 
@@ -97,7 +98,7 @@ publishToMavenLocal {
             mavenJava(MavenPublication) {
                 groupId = 'fr.cleymax'
                 artifactId = 'signgui'
-                version = '1.1.0'
+                version = '1.2.1'
 
                 from components.java
 
@@ -129,55 +130,52 @@ publishToMavenLocal {
         }
     }
 }
-//
-//publishing {
-//    publications {
-//        mavenJava(MavenPublication) {
-//            beforeDeployment {
-//                deployment -> signing.signPom(deployment)
-//            }
-//
-//            pom.project {
-//                name 'signgui'
-//                packaging 'jar'
-//                description 'Sign API for your Minecraft Bukkit plugins.'
-//                url 'https://github.com/Cleymax/SignGUI'
-//
-//                scm {
-//                    connection 'scm:git:git://github.com/Cleymax/SignGUI.git'
-//                    developerConnection 'scm:git:ssh://github.com:Cleymax/SignGUI.git'
-//                    url 'http://github.com/Cleymax/SignGUI/tree/master'
-//                }
-//
-//                issueManagement {
-//                    system 'GitHub'
-//                    url 'https://github.com/Cleymax/SignGUI/issues'
-//                }
-//
-//                licenses {
-//                    license {
-//                        name 'GNU General Public License v3.0'
-//                        url 'https://www.gnu.org/licenses/gpl-3.0.en.html'
-//                    }
-//                }
-//
-//                developers {
-//                    developer {
-//                        id 'cleymax'
-//                        name 'Clément P. (Cleymax)'
-//                        email 'cleymaxpro@gmail.com'
-//                    }
-//                }
-//            }
-//        }
-//    }
-//    repositories {
-//        maven {
-//            credentials {
-//                username mavenUser
-//                password mavenPassword
-//            }
-//            url repositoryUrl
-//        }
-//    }
-//}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            pom {
+                name = 'SignGUI'
+                packaging 'jar'
+                description 'Sign API for your Minecraft Bukkit plugins.'
+                url = 'https://github.com/Cleymax/SignGUI'
+
+                scm {
+                    connection = 'scm:git:git://github.com/Cleymax/SignGUI.git'
+                    developerConnection = 'scm:git:ssh://github.com:Cleymax/SignGUI.git'
+                    url = 'http://github.com/Cleymax/SignGUI/tree/master'
+                }
+
+                issueManagement {
+                    system = 'GitHub'
+                    url = 'https://github.com/Cleymax/SignGUI/issues'
+                }
+
+                licenses {
+                    license {
+                        name = 'GNU General Public License v3.0'
+                        url = 'https://www.gnu.org/licenses/gpl-3.0.en.html'
+                    }
+                }
+
+                developers {
+                    developer {
+                        id = 'cleymax'
+                        name = 'Clément P. (Cleymax)'
+                        email = 'cleymaxpro@gmail.com'
+                    }
+                }
+            }
+        }
+    }
+    repositories {
+        maven {
+            credentials {
+                username = project.findProperty("gpr.user") ?: System.getenv("USERNAME")
+                password = project.findProperty("gpr.key") ?: System.getenv("TOKEN")
+            }
+            name = "GitHubPackages"
+            url = uri('https://maven.pkg.github.com/Cleymax/SignGUI')
+        }
+    }
+}
