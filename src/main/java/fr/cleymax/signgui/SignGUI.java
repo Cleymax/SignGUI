@@ -10,9 +10,9 @@ import net.minecraft.world.item.EnumColor;
 import net.minecraft.world.level.block.Blocks;
 import net.minecraft.world.level.block.entity.TileEntitySign;
 import org.bukkit.Material;
-import org.bukkit.craftbukkit.v1_19_R1.block.CraftSign;
-import org.bukkit.craftbukkit.v1_19_R1.entity.CraftPlayer;
-import org.bukkit.craftbukkit.v1_19_R1.util.CraftMagicNumbers;
+import org.bukkit.craftbukkit.v1_19_R2.block.CraftSign;
+import org.bukkit.craftbukkit.v1_19_R2.entity.CraftPlayer;
+import org.bukkit.craftbukkit.v1_19_R2.util.CraftMagicNumbers;
 import org.bukkit.entity.Player;
 
 import java.beans.ConstructorProperties;
@@ -51,21 +51,24 @@ public final class SignGUI {
     }
 
     public void open(Player player) {
+        open(player, Material.OAK_SIGN);
+    }
+    public void open(Player player, Material signType) {
         this.player = player;
 
         final var blockPosition = new BlockPosition(player.getLocation().getBlockX(), 1, player.getLocation().getBlockZ());
 
-        var packet = new PacketPlayOutBlockChange(blockPosition, CraftMagicNumbers.getBlock(Material.OAK_SIGN, (byte) 0));
+        var packet = new PacketPlayOutBlockChange(blockPosition, CraftMagicNumbers.getBlock(signType, (byte) 0));
         sendPacket(packet);
 
         IChatBaseComponent[] components = CraftSign.sanitizeLines(lines);
-        var sign = new TileEntitySign(blockPosition, Blocks.cg.m());
+        var sign = new TileEntitySign(blockPosition, Blocks.cg.n());
         sign.a(EnumColor.p);
 
         for (var i = 0; i < components.length; i++)
             sign.a(i, components[i]);
 
-        sendPacket(sign.c());
+        sendPacket(sign.f());
 
         var outOpenSignEditor = new PacketPlayOutOpenSignEditor(blockPosition);
         sendPacket(outOpenSignEditor);
