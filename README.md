@@ -1,3 +1,7 @@
+!!! Currently being updated!  !!!
+New releases coming soon for the latest versions of Minecraft.
+
+
 <p align="center">
     <a href="https://github.com/Cleymax/SignGUI" rel="noopener">
         <img width=350px height=175px src="https://i.imgur.com/05lY09v.png" alt="Project logo">
